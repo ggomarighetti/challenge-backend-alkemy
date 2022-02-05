@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -6,11 +7,14 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
+using System.Security.Cryptography;
 
 namespace Challenge.Server
 {
@@ -19,6 +23,11 @@ namespace Challenge.Server
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+
+            Rijndael keyGenerator = Rijndael.Create();
+            keyGenerator.GenerateKey();
+
+            Configuration["JWT:SecretKey"] = Convert.ToBase64String(keyGenerator.Key);
         }
 
         public IConfiguration Configuration { get; }
@@ -30,6 +39,28 @@ namespace Challenge.Server
 
             // Base de datos
             services.AddSingleton(new Database.MySql(Configuration.GetConnectionString("MySql")));
+
+            // Json Web Token
+            services.AddAuthentication(x =>
+            {
+                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+
+            }).AddJwtBearer(x =>
+            {
+                x.SaveToken = true;
+                x.TokenValidationParameters = new()
+                {
+                    ValidIssuer = Configuration["JWT:Issuer"],
+                    ValidateIssuer = true,
+                    ValidAudience = Configuration["JWT:Audience"],
+                    ValidateAudience = true,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(
+                        Encoding.UTF8.GetBytes(Configuration["JWT:SecretKey"])),
+                };
+            });
 
             services.AddSwaggerGen(c =>
             {
