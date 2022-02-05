@@ -15,6 +15,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Security.Cryptography;
+using Challenge.Server.Repositories;
 
 namespace Challenge.Server
 {
@@ -39,6 +40,9 @@ namespace Challenge.Server
 
             // Base de datos
             services.AddSingleton(new Database.MySql(Configuration.GetConnectionString("MySql")));
+
+            // Repositorios
+            services.AddScoped<IAuthenticationRepository, AuthenticationRepository>();
 
             // Json Web Token
             services.AddAuthentication(x =>
