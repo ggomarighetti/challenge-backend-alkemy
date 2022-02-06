@@ -11,7 +11,7 @@ namespace Challenge.Model
         public int ID { get; set; }
         public string Image { get; set; }
         public string Title { get; set; }
-        public DateTime Release { get; set; }
+        public DateTime Launch { get; set; }
         public decimal Rating { get; set; }
         public List<Character> Characters { get; set; }
     }
