@@ -67,6 +67,12 @@ namespace Challenge.Server.Controllers
         {
             User returnUser = null;
 
+            if (await AuthenticationRepository.UserExists(credentials))
+            {
+                Logger.LogError("Un usuario ha intentado registrarse con credenciales ya existentes.");
+                return StatusCode(409, returnUser);
+            }
+
             try
             {
                 returnUser = await AuthenticationRepository.Register(credentials);

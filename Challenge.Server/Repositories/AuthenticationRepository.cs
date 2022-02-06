@@ -75,6 +75,11 @@ namespace Challenge.Server.Repositories
                 return returnUser;
             }
 
+            if (await UserExists(credentials))
+            {
+                return returnUser;
+            }
+
             Dictionary<string, object> parameters = new()
             {
                 { "uEmail", credentials.Email },
@@ -89,6 +94,17 @@ namespace Challenge.Server.Repositories
             }
 
             return await GetUser(identifier);
+        }
+
+        public async Task<bool> UserExists(Authentication credentials)
+        {
+            Dictionary<string, object> parameters = new()
+            {
+                { "uEmail", credentials.Email },
+                { "uPassword", credentials.Password }
+            };
+
+            return Convert.ToBoolean(await MySql.ExecuteScalar("UserExists", parameters));
         }
     }
 }

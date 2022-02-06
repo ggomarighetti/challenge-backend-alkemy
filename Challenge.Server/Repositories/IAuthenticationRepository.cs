@@ -8,5 +8,8 @@ namespace Challenge.Server.Repositories
         Task<User> GetUser(int identifier);
         Task<User> Login(Authentication credentials);
         Task<User> Register(Authentication credentials);
+
+        // Utility
+        Task<bool> UserExists(Authentication credentials);
     }
 }
