@@ -10,7 +10,8 @@ namespace Challenge.Model
     public class Authentication
     {
         [Required(AllowEmptyStrings = false)]
-        public string Username { get; set; }
+        [EmailAddress]
+        public string Email { get; set; }
 
         [Required(AllowEmptyStrings = false)]
         public string Password { get; set; }

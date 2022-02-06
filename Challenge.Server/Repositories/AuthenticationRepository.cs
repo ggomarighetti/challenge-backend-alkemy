@@ -35,7 +35,7 @@ namespace Challenge.Server.Repositories
             returnUser = new()
             {
                 ID = Convert.ToInt32(row["ID"]),
-                Username = Convert.ToString(row["Username"])
+                Email = Convert.ToString(row["Email"])
             };
 
             return returnUser;
@@ -52,7 +52,7 @@ namespace Challenge.Server.Repositories
 
             Dictionary<string, object> parameters = new()
             {
-                { "uUsername", credentials.Username },
+                { "uEmail", credentials.Email },
                 { "uPassword", credentials.Password }
             };
 
@@ -77,7 +77,7 @@ namespace Challenge.Server.Repositories
 
             Dictionary<string, object> parameters = new()
             {
-                { "uUsername", credentials.Username },
+                { "uEmail", credentials.Email },
                 { "uPassword", credentials.Password }
             };
 
