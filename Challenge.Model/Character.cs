@@ -16,5 +16,13 @@ namespace Challenge.Model
         public decimal Weight { get; set; }
         public string History { get; set; }
         public List<Production> Productions { get; set; }
+
+        public bool Validate()
+        {
+            ValidationContext context = new(this, serviceProvider: null, items: null);
+            List<ValidationResult> results = new();
+
+            return Validator.TryValidateObject(this, context, results, true);
+        }
     }
 }
