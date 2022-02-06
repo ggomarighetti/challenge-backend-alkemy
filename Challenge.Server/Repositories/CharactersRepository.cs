@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace Challenge.Server.Repositories
 {
-    public class CharacterRepository : ICharacterRepository
+    public class CharactersRepository : ICharactersRepository
     {
         private readonly Database.MySql MySql;
 
-        public CharacterRepository(Database.MySql mySql)
+        public CharactersRepository(Database.MySql mySql)
         {
             MySql = mySql;
         }

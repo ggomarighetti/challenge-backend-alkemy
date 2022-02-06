@@ -15,11 +15,11 @@ namespace Challenge.Server.Controllers
     public class CharactersController : ControllerBase
     {
         private readonly IConfiguration Configuration;
-        private readonly ICharacterRepository CharacterRepository;
+        private readonly ICharactersRepository CharacterRepository;
         private readonly ILogger Logger;
 
         public CharactersController(IConfiguration configuration,
-            ICharacterRepository characterRepository, ILogger<CharactersController> logger)
+            ICharactersRepository characterRepository, ILogger<CharactersController> logger)
         {
             Configuration = configuration;
             CharacterRepository = characterRepository;

@@ -43,7 +43,8 @@ namespace Challenge.Server
 
             // Repositorios
             services.AddScoped<IAuthenticationRepository, AuthenticationRepository>();
-            services.AddScoped<ICharacterRepository, CharacterRepository>();
+            services.AddScoped<ICharactersRepository, CharactersRepository>();
+            services.AddScoped<IProductionsRepository, ProductionsRepository>();
 
             // Json Web Token
             services.AddAuthentication(x =>

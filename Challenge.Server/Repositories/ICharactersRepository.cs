@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace Challenge.Server.Repositories
 {
-    public interface ICharacterRepository
+    public interface ICharactersRepository
     {
         Task<Character> GetCharacter(int identifier);
         Task<Character> CreateCharacter(Character character);
